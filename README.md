@@ -19,21 +19,8 @@ Your app must send a JSON body with the following format:
 
 
 ---
-
-## Response Structure 
-
-
-### 1. The Output Fields
+## Output Fields
 * **`viora_reply`**: The actual string to speak or display.
 * **`decision`**: The system code that tells your app what to do next.
 * **`intent`**: Why the user said what they said.
-
-### 2. Decision Action Codes
-| Action Code | Hardware Instruction |
-| :--- | :--- |
-| `EXECUTE_CAMERA_START` | Power on the camera feed. |
-| `EXECUTE_CAMERA_STOP` | Shut down the camera hardware. |
-| `EXECUTE_SCENE_DESCRIPTION` | Snapshot a frame and describe it. |
-| `EXECUTE_CAMERA_SCAN` | Extract text from the current view (OCR). |
-
 ---
