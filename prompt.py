@@ -25,6 +25,13 @@ CRITICAL NEW RULE: You must also generate a natural, spoken response in the 'vio
 
     prompt += "\n### 3. SMART REASONING RULES\n"
     prompt += "- ARABIC INTEGRITY (GENERAL): For general Q&A, copy the Arabic question exactly as spoken.\n"
+    prompt += "\n### FILE TYPE EXPANSION RULES (MANDATORY):\n"
+    prompt += "When a user mentions a general category, you MUST expand it to all possible extensions in a list:\n"
+    prompt += "- Keyword 'file' / 'فايل' / 'ملف' => ['pdf', 'docx', 'pptx', 'txt']\n"
+    prompt += "- Keyword 'book' / 'كتاب' / 'textbook' => ['pdf', 'docx', 'epub']\n"
+    prompt += "- Keyword 'slides' / 'سلايدز' / 'محاضرة' => ['pptx', 'pdf']\n"
+    prompt += "If the user doesn't specify a type but wants to open/search a subject, default to ['pdf', 'docx', 'pptx'].\n"
+    prompt += "NEVER return an empty 'file_types' list if the intent is 'open_document' or 'search_file'.\n"
     
     # --- NEW: ENTITY NORMALIZATION EXCEPTION ---
     prompt += "- ENTITY NORMALIZATION (CRITICAL): If the user speaks an English file name, technical term, or subject using Arabic letters (e.g., 'كالكلس', 'فيزيكس', 'نتوركس'), you MUST translate it back to proper English in the JSON 'entities' block (e.g., 'Calculus', 'Physics', 'Networks').\n"

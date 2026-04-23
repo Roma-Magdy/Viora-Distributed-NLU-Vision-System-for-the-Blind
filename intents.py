@@ -21,38 +21,35 @@ MASTER_INTENTS = [
     IntentDef(
         name="open_document",
         description="Open a specific local file for reading.",
-        entities={"document_name": "The exact name of the file."},
+        entities={
+            "document_name": "The exact name of the file.",
+            "file_types": "List of all potential extensions." # <--- ADDED THIS
+        },
         required_entities=["document_name"],
         rules=[
-            "Requires a specific filename.",
-            "CORRECTION PRIORITY: If user says 'X... no wait/forget it Y', choose Y.", 
-            "IGNORE phrase before words like: 'لا فكك', 'طنش', 'انسى', 'غيرت رأيي', 'لا استنى'.",
-            "If user provides a TOPIC instead of a NAME, map to 'search_file' instead."
+            "BROAD MAPPING: If user says 'file' or 'فايل' -> set file_types to ['pdf', 'docx', 'pptx', 'txt'].",
+            "BROAD MAPPING: If user says 'book' or 'كتاب' -> set file_types to ['pdf', 'docx'].",
+            "NORMALIZATION: Convert Arabic subjects to English (e.g., 'كالكلس' -> 'Calculus')."
         ],
         examples=[
-            # Notice how 'كالكلس' is mapped to 'Calculus' in both the entity AND the Viora response!
-            {"user": "ممكن تفتح لي فايلت كالكلس", "json": '{"intent": "open_document", "confidence": 1.0, "entities": {"document_name": "Calculus"}, "viora_response": "حاضر، هفتحلك فايل Calculus دلوقتي."}'},
-            {"user": "افتحلي file الـ Intro to CS", "json": '{"intent": "open_document", "confidence": 1.0, "entities": {"document_name": "Intro to CS"}, "viora_response": "حاضر، هفتحلك فايل Intro to CS دلوقتي."}'},
-            {"user": "دورلي على كتاب طبخ .. لا فكك افتحلي Intro to CS", "json": '{"intent": "open_document", "confidence": 1.0, "entities": {"document_name": "Intro to CS"}, "viora_response": "ولا يهمك، لغيت البحث وهفتحلك فايل Intro to CS."}'}
+            {"user": "افتحلي فايل الكالكلس", "json": '{"intent": "open_document", "confidence": 1.0, "entities": {"document_name": "Calculus", "file_types": ["pdf", "docx", "pptx", "txt"]}, "viora_response": "حاضر، هفتحلك ملف Calculus."}'}
         ]
     ),
     IntentDef(
         name="search_file",
-        description="Search for resources (Books, Slides, PDFs) not currently open.",
+        description="Search for resources (Books, Slides, PDFs).",
         entities={
-            "search_query": "The topic or keyword.",
-            "file_types": "List of extensions. e.g. ['pdf'] or ['pptx', 'pdf']."
+            "search_query": "The topic.",
+            "file_types": "List of extensions."
         },
         required_entities=["search_query"],
         rules=[
-            "Extract ONLY the topic. REMOVE filler words.",
-            "Map 'Slides' -> ['pptx']. Map 'Book' -> ['pdf'].",
-            "Map 'Lectures' -> ['pptx', 'pdf'].",
-            "If user says 'Not X, but Y', search for Y."
+            "IF user says 'file' or 'search' generically -> set file_types to ['pdf', 'docx', 'pptx', 'txt'].",
+            "IF user says 'slides' -> set file_types to ['pptx', 'pdf'].",
+            "REMOVE filler words from search_query."
         ],
         examples=[
-            {"user": "دورلي على book بيتكلم عن Neural Networks", "json": '{"intent": "search_file", "confidence": 0.9, "entities": {"search_query": "Neural Networks", "file_types": ["pdf"]}, "viora_response": "ثواني، بدورلك على كتاب عن Neural Networks."}'},
-            {"user": "مش عايز الـ slides عايز الـ textbook", "json": '{"intent": "search_file", "confidence": 1.0, "entities": {"search_query": "textbook", "file_types": ["pdf"]}, "viora_response": "تمام، هدورلك على الـ textbook."}'}
+            {"user": "دورلي على فايل Neural Networks", "json": '{"intent": "search_file", "confidence": 1.0, "entities": {"search_query": "Neural Networks", "file_types": ["pdf", "docx", "pptx", "txt"]}, "viora_response": "بدورلك على ملفات Neural Networks."}'}
         ]
     ),
 IntentDef(
