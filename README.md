@@ -4,6 +4,7 @@ The NLU server was previously hosted on Lightning AI. However, Lightning AI is c
 This server acts as the brain of the system, converting user speech and text into actionable commands.
 
 A test application is available here: https://github.com/Roma-Magdy/viora-nlu
+
 Use this guide to learn how to connect your backend service to the NLU engine.
 
 ### Connection Details
