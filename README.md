@@ -1,5 +1,10 @@
 ##  1. Viora NLU Server (Port 8000)
-This server is the brain that converts user speech/text into system actions. Use this guide to connect your backend service to the NLU engine.
+The NLU server was previously hosted on Lightning AI. However, Lightning AI is currently unavailable. We hope these issues will be resolved soon.
+
+This server acts as the brain of the system, converting user speech and text into actionable commands.
+
+A test application is available here: https://github.com/Roma-Magdy/viora-nlu
+Use this guide to learn how to connect your backend service to the NLU engine.
 
 ### Connection Details
 * **Base URL:** `https://8000-01kp795e7c121r8a8jj0d78qwt.cloudspaces.litng.ai`
